@@ -1,0 +1,8 @@
+<nav class='route'><menu class='grid'>
+  <li class='col-1-8'><%= link_to 'List', routes_url %></li>
+  <% if defined?(route) && ! route.new_record? %>
+    <li class='col-1-8'><%= link_to 'Edit', edit_route_url(route) %></li>
+  <% end %>
+  <li class='col-1-8'><%= link_to 'New', new_route_url %></li>
+</menu></nav>
+

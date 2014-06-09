@@ -1,0 +1,20 @@
+<%= title_and_banner @brand.name %>
+<%= render 'nav', brand: @brand %>
+
+<%= content_tag_for :div, @brand do %>
+  <p class='by-brewery'>by <span class='brewery'><%= link_to @brand.brewery_name, @brand.brewery %></span></p>
+  <p><strong>Average Price</strong> <%= number_to_currency @brand.average_price %></p>
+  <h4>Average by Route</h4>
+    <ul>
+      <% @brand.routes.sort.each do |route| %>
+        <li><strong><%= route %></strong> <%= number_to_currency @brand.average_price(route: route) %> (<%= pluralize @brand.data_point_count(route: route), 'data point' %>)</li>
+      <% end %>
+    </ul>
+  <h4>Average by Retailer</h4>
+    <ul>
+      <% @brand.retailers.uniq.sort.each do |retailer| %>
+        <li><strong><%= retailer.name %></strong> <%= number_to_currency @brand.average_price(retailer: retailer) %> (<%= pluralize @brand.data_point_count(retailer: retailer), 'data point' %>)</li>
+      <% end %>
+    </ul>
+
+<% end %>

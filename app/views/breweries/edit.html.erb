@@ -1,0 +1,19 @@
+<% if @brewery.new_record? %>
+  <%= title_and_banner "New Brewery" %>
+<% else %>
+  <%= title_and_banner "Edit #{@brewery.name}" %>
+<% end %>
+
+<%= render 'nav', brewery: @brewery %>
+
+<%= render partial: 'shared/form_errors', object: @brewery.errors %>
+
+<%= form_for @brewery do |f| %>
+
+  <fieldset>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </fieldset>
+
+  <%= f.submit 'Go' %>
+<% end %>

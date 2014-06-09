@@ -1,0 +1,11 @@
+<%= title_and_banner @brewery.name %>
+
+<%= render 'nav', brewery: @brewery %>
+
+<h3>Brands</h3>
+
+<ul class='brand-list'>
+  <% @brewery.brands.each do |brand| %>
+    <li><%= link_to brand.name, brand %></li>
+  <% end %>
+</ul>

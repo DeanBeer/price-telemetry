@@ -1,0 +1,13 @@
+<%= title_and_banner 'Breweries' %>
+<%= render 'nav' %>
+<ul class='brewery-list'>
+  <% @breweries.each do |brewery| %>
+    <li><%= link_to brewery.name, brewery %>
+        <ul class='brand-list'>
+          <% brewery.brands.order(:name).each do |brand| %>
+            <li><%= link_to brand.name, brand %> (<%= pluralize brand.data_point_count, 'data point' %>)</li>
+          <% end %>
+        </ul>
+     </li>
+  <% end %>
+</ul>

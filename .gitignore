@@ -1,0 +1,8 @@
+/.bundle
+/config/database.yml
+/log/*.log
+/public/simplecov
+/tmp
+.DS_Store
+.Idea
+*.swp

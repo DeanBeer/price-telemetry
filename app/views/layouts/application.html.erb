@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
+  <meta content='user-scalable=no, width=device-width, initial-scale=1.0' name='viewport' />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <title>
+    <% if content_for? :title %>
+      <%= yield :title %> --
+    <% end %>
+    Price Telemetry
+  </title>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+
+  <div data-role='page'>
+    <header id='header'>
+      <h1><%= link_to "Price Telemetry", root_url %></h1>
+      <%= render 'shared/nav' %>
+      <%= render 'shared/flashes' %>
+    </header>
+
+    <div class='container' id='main' data-role='content'>
+      <%= yield %>
+    </div>
+
+    <footer id='footer'>
+      <%= yield :footer %>
+    </div>
+
+  </div>
+
+</body>
+</html>

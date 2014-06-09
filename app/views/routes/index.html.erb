@@ -1,0 +1,7 @@
+<%= title_and_banner 'Brands' %>
+<%= render 'nav' %>
+<ul>
+  <% @routes.each do |route| %>
+    <li><%= link_to route.name, route %></li>
+  <% end %>
+</ul>

@@ -1,0 +1,19 @@
+<% if @brand.new_record? %>
+  <%= title_and_banner "New Brand" %>
+<% else %>
+  <%= title_and_banner "Edit #{@brand.name}" %>
+<% end %>
+
+<%= render 'nav', brand: @brand %>
+
+<%= render partial: 'shared/form_errors', object: @brand.errors %>
+
+<%= form_for @brand do |f| %>
+
+  <fieldset>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </fieldset>
+
+  <%= f.submit 'Go' %>
+<% end %>

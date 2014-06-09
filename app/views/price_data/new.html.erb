@@ -1,0 +1,57 @@
+<%= title_and_banner "Enter Data" %>
+
+<%= render partial: 'shared/form_errors', object: @price_datum.errors %>
+
+<%= form_for @price_datum, html: { class: :grid } do |f| %>
+
+  <fieldset>
+    <%= f.label :date %>
+    <%= f.text_field :date, class: 'datepicker' %>
+  </fieldset>
+
+  <fieldset>
+    <%= fields_for :brand do |bf| %>
+      <%= bf.label :name, "Brand" %>
+      <%= bf.text_field :name, data: { brands: @brands } %>
+
+      <%= fields_for :brewery do |brf| %>
+        <%= brf.label :name, 'Brewery' %>
+        <%= brf.text_field :name, data: { autocomplete_source: @breweries } %>
+      <% end %>
+
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label :price %>
+    <%= currency_symbol %><%= f.text_field :price %>
+  </fieldset>
+
+  <fieldset>
+    <%= fields_for :packaging do |pf| %>
+
+     <%= pf.label :quantity %>
+     <%= pf.number_field :quantity, min: 1 %>
+
+     <%= pf.label :volume %>
+     <%= pf.number_field :volume, min: 1 %>
+
+    <% end %>
+
+  </fieldset>
+
+  <fieldset>
+    <%= fields_for :retailer do |lf| %>
+      <%= lf.label :name, 'Retailer' %>
+      <%= lf.text_field :name, data: { autocomplete_source: @retailers } %>
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label :on_special, 'On special?' %>
+    <%= f.check_box :on_special %>
+  </fieldset>
+
+  <%= f.submit %>
+
+<% end %>

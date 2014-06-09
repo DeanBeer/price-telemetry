@@ -1,0 +1,8 @@
+<%= content_tag_for :div, price_datum do %>
+  <h3><%= link_to price_datum.brand_name, price_datum.brand %> &mdash; <%= price_datum.brewery_name %></h3>
+  <ul>
+    <li><strong>Date</strong> <%= price_datum.date %></li>
+    <li><strong>Pirce</strong> <%= number_to_currency price_datum.price %></li>
+    <li><strong>Package</strong> <%= price_datum.package_name %></li>
+    <li><strong>Retailer</strong> <%= price_datum.retailer_name %></li>
+<% end %>

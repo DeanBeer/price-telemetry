@@ -1,0 +1,9 @@
+<% if form_errors && form_errors.count > 0 %>
+  <p><%= pluralize(form_errors.count, "Error") %> prevented this from being saved:</p>
+  <% form_errors.full_messages.each do |message| %>
+    <div class="alert alert-error">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+

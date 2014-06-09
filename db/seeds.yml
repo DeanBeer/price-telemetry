@@ -1,0 +1,71 @@
+---
+:brands:
+  - :name: Dammit Jim!
+    :brewery: &nrb
+      :name: New Republic Brewing Co
+  - :name: Skylight
+    :brewery: *nrb
+  - :name: Windlass
+    :brewery: *nrb
+  - :name: Astrolabe
+    :brewery: *nrb
+  - :name: Kadigan
+    :brewery: *nrb
+  - :name: Warimono
+    :brewery: *nrb
+  - :name: Whipsaw
+    :brewery: *nrb
+  - :name: '1836'
+    :brewery: &buff
+      :name: Buffalo Bayou Brewing Co
+  - :name: More Cowbell
+    :brewery: *buff
+  - :name: Bombshell Blonde
+    :brewery: &so_star
+      :name: Southern Star Brewing Co
+  - :name: Pine Belt Pale Ale
+    :brewery: *so_star
+  - :name: Valkyrie
+    :brewery: *so_star
+  - :name: Tripel B
+    :brewery: &adelberts
+      :name: Adelbert's
+
+:packagings:
+  - :name: Bomber
+    :quantity: 1
+    :volume: 22
+  - :name: Six Pack
+    :quantity: 6
+    :volume: 12
+
+:retailers:
+  - :name: Specs College Station (37)
+    :route_name: B/CS Daytime
+  - :name: Specs Longmire (7)
+    :route_name: B/CS Daytime
+  - :name: Specs Smith Street
+    :route_name: B/CS Daytime
+  - :name: HEB Bunker Hill
+    :route_name: Houston Morning
+  - :name: HEB Fairfield
+    :route_name: Houston Morning
+  - :name: HEB Tower Point
+    :route_name: B/CS Morning
+  - :name: HEB College Station
+    :route_name: B/CS Morning
+  - :name: HEB Bryan
+    :route_name: B/CS Morning
+  - :name: Premium Draught
+    :route_name: Houston Daytime
+  - :name: D & Q Mini Mart
+    :route_name: Houston Daytime
+  - :name: Growlers Beer & Wine To Go
+    :route_name: Houston Daytime
+
+:routes:
+  - :name: B/CS Daytime
+  - :name: B/CS Morning
+  - :name: B/CS Evening
+  - :name: Houston Morning
+  - :name: Houston Daytime
