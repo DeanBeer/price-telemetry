@@ -3,6 +3,7 @@
 /log/*.log
 /public/simplecov
 /tmp
+/db/*sqlite3
 .DS_Store
 .Idea
 *.swp
