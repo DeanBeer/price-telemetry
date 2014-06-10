@@ -98,6 +98,9 @@ GEM
       money (~> 6.1.1)
       railties (>= 3.0)
     multi_json (1.10.1)
+    nil_returning_coder (0.0.2)
+      activerecord
+      activesupport
     polyglot (0.3.5)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -202,6 +205,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   money-rails
+  nil_returning_coder
   rails (= 4.1.1)
   rspec-activemodel-mocks
   rspec-rails
