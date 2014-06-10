@@ -7,7 +7,7 @@
   <h4>Average by Route</h4>
     <ul>
       <% @brand.routes.sort.each do |route| %>
-        <li><strong><%= route %></strong> <%= number_to_currency @brand.average_price(route: route) %> (<%= pluralize @brand.data_point_count(route: route), 'data point' %>)</li>
+        <li><strong><%= route.name %></strong> <%= number_to_currency @brand.average_price(route: route) %> (<%= pluralize @brand.data_point_count(route: route), 'data point' %>)</li>
       <% end %>
     </ul>
   <h4>Average by Retailer</h4>

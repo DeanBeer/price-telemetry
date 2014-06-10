@@ -7,6 +7,8 @@ class PriceDatum < ActiveRecord::Base
   belongs_to :packaging, inverse_of: :price_data
   belongs_to :retailer, inverse_of: :price_data
 
+  has_one :route, through: :retailer
+
   monetize :price_cents
 
   validates :date, presence: true
@@ -44,7 +46,7 @@ private
 
 
   def initialize_on_special
-    self.on_special.nil? && self.on_special = false
+    self.on_special.blank? && self.on_special = false
   end
 
 end
