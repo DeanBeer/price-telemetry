@@ -14,24 +14,27 @@
 ActiveRecord::Schema.define(version: 20140608143212) do
 
   create_table "brands", force: true do |t|
-    t.string  "name",       null: false
-    t.integer "brewery_id", null: false
+    t.string  "name",       limit: 100, null: false
+    t.integer "brewery_id",             null: false
   end
 
   add_index "brands", ["brewery_id"], name: "index_brands_on_brewery_id"
   add_index "brands", ["name", "brewery_id"], name: "index_brands_on_name_and_brewery_id", unique: true
 
   create_table "breweries", force: true do |t|
-    t.string "name", null: false
+    t.string "name", limit: 100, null: false
   end
 
   add_index "breweries", ["name"], name: "index_breweries_on_name", unique: true
 
   create_table "packagings", force: true do |t|
-    t.string  "name"
-    t.integer "quantity", null: false
-    t.integer "volume",   null: false
+    t.string  "material", limit: 20,  null: false
+    t.string  "name",     limit: 30
+    t.integer "quantity",             null: false
+    t.string  "volume",   limit: 500, null: false
   end
+
+  add_index "packagings", ["material", "quantity", "volume"], name: "index_packagings_on_material_and_quantity_and_volume", unique: true
 
   create_table "price_data", force: true do |t|
     t.integer  "brand_id",                       null: false
@@ -50,14 +53,14 @@ ActiveRecord::Schema.define(version: 20140608143212) do
   add_index "price_data", ["retailer_id"], name: "index_price_data_on_retailer_id"
 
   create_table "retailers", force: true do |t|
-    t.string  "name",     null: false
+    t.string  "name",     limit: 100, null: false
     t.integer "route_id"
   end
 
   add_index "retailers", ["route_id"], name: "index_retailers_on_route_id"
 
   create_table "routes", force: true do |t|
-    t.string "name", null: false
+    t.string "name", limit: 50, null: false
   end
 
 end

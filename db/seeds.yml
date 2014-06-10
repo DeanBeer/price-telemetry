@@ -34,10 +34,24 @@
 :packagings:
   - :name: Bomber
     :quantity: 1
-    :volume: 22
-  - :name: Six Pack
+    :volume: 22 fluid-ounces
+    :material: glass
+  - :name: Six Pack (glass)
     :quantity: 6
-    :volume: 12
+    :volume: 12 fluid-ounces
+    :material: glass
+  - :name: Six Pack (can)
+    :quantity: 6
+    :volume: 12 fluid-ounces
+    :material: aluminum
+  - :name: Pint (draft)
+    :quantity: 1
+    :volume: 16 fluid-ounces
+    :material: draft
+  - :name: Imperial Pint (draft)
+    :quantity: 1
+    :volume: 20 fluid-ounces
+    :material: draft
 
 :retailers:
   - :name: Specs College Station (37)
