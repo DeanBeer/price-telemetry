@@ -1,0 +1,7 @@
+<%= title_and_banner 'Retailers' %>
+
+<ul>
+  <% @retailers.each do |retailer| %>
+    <li><%= link_to retailer.name, retailer %></li>
+  <% end %>
+</ul>
