@@ -1,35 +1,40 @@
-class PermittedParams < Struct.new(:params)
+class PermittedParams < Struct.new(:tainted_params)
 
   def brand
-    params.require(:brand).permit :name
+    tainted_params.require(:brand).permit :name
   end
 
 
   def brewery
-    params.require(:brewery).permit :name
+    tainted_params.require(:brewery).permit :name
+  end
+
+
+  def new_price_datum
+    tainted_params.permit :date, { retailer: [:name] }
   end
 
 
   def packaging
-    params.require(:packaging).permit :name, :quantity, :volume
+    tainted_params.require(:packaging).permit :name
   end
 
 
   def price_datum
-    params.require(:price_datum).permit :_destroy,
-                                        :date,
-                                        :on_special,
-                                        :price
+    tainted_params.require(:price_datum).permit :_destroy,
+                                                :date,
+                                                :on_special,
+                                                :price
   end
 
 
   def retailer
-    params.require(:retailer).permit :name
+    tainted_params.require(:retailer).permit :name
   end
 
 
   def route
-    params.require(:route).permit :name
+    tainted_params.require(:route).permit :name
   end
 
 end

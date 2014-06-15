@@ -32,7 +32,12 @@ class Brand < ActiveRecord::Base
   def price_data_for(route:nil, retailer: nil)
     p = price_data
     p = price_data_for_retailer(p, retailer: retailer)
-    p = price_data_for_route(p, route: route)
+    price_data_for_route(p, route: route)
+  end
+
+
+  def to_param
+    "#{id}-#{name.gsub(/[^A-z0-9]/, '-')}"
   end
 
 private

@@ -4,8 +4,9 @@ class CreatePackagings < ActiveRecord::Migration
       t.string :material, null: false, limit: 20
       t.string :name, index: { unique: true }, limit: 30
       t.integer :quantity, null: false
-      t.string :volume, null: false, limit: 500
+      t.integer :volume_scalar, null: false
+      t.string :volume_units, null: false, limit: 20
     end
-    add_index :packagings, [:material, :quantity, :volume], unique: true
+    add_index :packagings, [:material, :quantity, :volume_scalar, :volume_units], unique: true, name: 'unique_material_quantity_volume'
   end
 end

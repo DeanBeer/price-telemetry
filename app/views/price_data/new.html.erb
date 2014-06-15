@@ -29,15 +29,9 @@
 
   <fieldset>
     <%= fields_for :packaging do |pf| %>
-
-     <%= pf.label :quantity %>
-     <%= pf.number_field :quantity, min: 1 %>
-
-     <%= pf.label :volume %>
-     <%= pf.number_field :volume, min: 1 %>
-
+      <%= pf.label :name, 'Package' %>
+      <%= pf.text_field :name, data: { autocomplete_source: @packagings } %>
     <% end %>
-
   </fieldset>
 
   <fieldset>

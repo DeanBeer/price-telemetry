@@ -34,24 +34,89 @@
 :packagings:
   - :name: Bomber
     :quantity: 1
-    :volume: 22 fluid-ounces
+    :volume_scalar: 22
+    :volume_units: fluid-ounces
     :material: glass
   - :name: Six Pack (glass)
     :quantity: 6
-    :volume: 12 fluid-ounces
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
     :material: glass
   - :name: Six Pack (can)
     :quantity: 6
-    :volume: 12 fluid-ounces
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
+    :material: aluminum
+  - :name: Four Pack (glass)
+    :quantity: 4
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
+    :material: glass
+  - :name: Four Pack (cans)
+    :quantity: 4
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
+    :material: aluminum
+  - :name: Four Pack (tall cans)
+    :quantity: 4
+    :volume_scalar: 16
+    :volume_units: fluid-ounces
     :material: aluminum
   - :name: Pint (draft)
     :quantity: 1
-    :volume: 16 fluid-ounces
+    :volume_scalar: 16
+    :volume_units: fluid-ounces
     :material: draft
   - :name: Imperial Pint (draft)
     :quantity: 1
-    :volume: 20 fluid-ounces
+    :volume_scalar: 20
+    :volume_units: fluid-ounces
     :material: draft
+  - :name: 10 Ounce (draft)
+    :quantity: 1
+    :volume_scalar: 10
+    :volume_units: fluid-ounces
+    :material: draft
+  - :name: '750 ml'
+    :quantity: 1
+    :volume_scalar: 750
+    :volume_units: ml
+    :material: glass
+  - :name: '350 ml'
+    :quantity: 1
+    :volume_scalar: 350
+    :volume_units: ml
+    :material: glass
+  - :name: '350 ml 4-pack'
+    :quantity: 4
+    :volume_scalar: 350
+    :volume_units: ml
+    :material: glass
+  - :name: Case (glass)
+    :quantity: 24
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
+    :material: glass
+  - :name: Case (can)
+    :quantity: 24
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
+    :material: aluminum
+  - :name: Bottle
+    :quantity: 1
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
+    :material: glass
+  - :name: Can
+    :quantity: 1
+    :volume_scalar: 12
+    :volume_units: fluid-ounces
+    :material: aluminum
+  - :name: Tall Can
+    :quantity: 1
+    :volume_scalar: 16
+    :volume_units: fluid-ounces
+    :material: aluminum
 
 :retailers:
   - :name: Specs College Station (37)

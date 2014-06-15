@@ -28,13 +28,14 @@ ActiveRecord::Schema.define(version: 20140608143212) do
   add_index "breweries", ["name"], name: "index_breweries_on_name", unique: true
 
   create_table "packagings", force: true do |t|
-    t.string  "material", limit: 20,  null: false
-    t.string  "name",     limit: 30
-    t.integer "quantity",             null: false
-    t.string  "volume",   limit: 500, null: false
+    t.string  "material",      limit: 20, null: false
+    t.string  "name",          limit: 30
+    t.integer "quantity",                 null: false
+    t.integer "volume_scalar",            null: false
+    t.string  "volume_units",  limit: 20, null: false
   end
 
-  add_index "packagings", ["material", "quantity", "volume"], name: "index_packagings_on_material_and_quantity_and_volume", unique: true
+  add_index "packagings", ["material", "quantity", "volume_scalar", "volume_units"], name: "unique_material_quantity_volume", unique: true
 
   create_table "price_data", force: true do |t|
     t.integer  "brand_id",                       null: false

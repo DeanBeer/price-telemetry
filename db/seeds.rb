@@ -30,6 +30,11 @@ end
 
 
 seeds[:packagings].each do |p|
-  puts p
-  Packaging.find_or_create_by p
+  package = Packaging.where name: p[:name]
+  if package.count == 0
+    puts p
+    Packaging.find_or_create_by p
+  else
+    puts "Found #{p[:name]}"
+  end
 end
