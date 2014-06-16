@@ -18,7 +18,7 @@ class RoutesController < ApplicationController
 
 
   def index
-    @routes = Route.all
+    @routes = Route.all.order :name
   end
 
 

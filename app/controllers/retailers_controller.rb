@@ -20,7 +20,7 @@ class RetailersController < ApplicationController
 
 
   def index
-    @retailers = Retailer.all
+    @retailers = Retailer.all.order :name
   end
 
 

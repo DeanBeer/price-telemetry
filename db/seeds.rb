@@ -21,7 +21,8 @@ end
 seeds[:retailers].each do |r|
   retailer = Retailer.where name: r[:name]
   if retailer.count == 0
-    Retailer.create! r
+    route = Route.find_or_create_by name: r[:route_name]
+    route.retailers.create name: r[:name]
     puts "Created #{r[:name]}"
   else
     puts "Found #{r[:name]}"
