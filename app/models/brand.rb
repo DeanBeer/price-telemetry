@@ -1,5 +1,7 @@
 class Brand < ActiveRecord::Base
 
+  include PriceTelemetry::PrettyParam
+
   belongs_to :brewery
 
   accepts_nested_attributes_for :brewery
@@ -35,11 +37,6 @@ class Brand < ActiveRecord::Base
     p = price_data
     p = price_data_for_retailer(p, retailer: retailer)
     price_data_for_route(p, route: route)
-  end
-
-
-  def to_param
-    "#{id}-#{name.gsub(/[^A-z0-9]/, '-')}"
   end
 
 private

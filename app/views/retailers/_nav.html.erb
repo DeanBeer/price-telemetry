@@ -1,0 +1,6 @@
+<nav class='retailers'><menu class='grid'>
+  <% if defined?(retailer) && ! retailer.new_record? %>
+    <li class='col-1-8'><%= link_to 'Edit', edit_retailer_url(retailer) %></li>
+  <% end %>
+  <li class='col-1-8'><%= link_to 'New', new_retailer_url %></li>
+</menu></nav>

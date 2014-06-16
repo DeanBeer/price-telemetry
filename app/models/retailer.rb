@@ -1,5 +1,7 @@
 class Retailer < ActiveRecord::Base
 
+  include PriceTelemetry::PrettyParam
+
   belongs_to :route
 
   has_many :price_data
