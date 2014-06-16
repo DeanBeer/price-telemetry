@@ -3,17 +3,17 @@
 
 <%= content_tag_for :div, @brand do %>
   <p class='by-brewery'>by <span class='brewery'><%= link_to @brand.brewery_name, @brand.brewery %></span></p>
-  <p><strong>Average Price</strong> <%= number_to_currency @brand.average_price %></p>
+  <p><strong>Average Price</strong> <%= number_to_currency @brand.average_price('floz') %> per ounce</p>
   <h4>Average by Route</h4>
     <ul>
-      <% @brand.routes.sort.each do |route| %>
-        <li><strong><%= route.name %></strong> <%= number_to_currency @brand.average_price(route: route) %> (<%= pluralize @brand.data_point_count(route: route), 'data point' %>)</li>
+      <% @brand.routes.uniq.sort.each do |route| %>
+        <li><strong><%= route.name %></strong> <%= number_to_currency @brand.average_price(route: route) %> / oz (<%= pluralize @brand.data_point_count(route: route), 'data point' %>)</li>
       <% end %>
     </ul>
   <h4>Average by Retailer</h4>
     <ul>
       <% @brand.retailers.uniq.sort.each do |retailer| %>
-        <li><strong><%= retailer.name %></strong> <%= number_to_currency @brand.average_price(retailer: retailer) %> (<%= pluralize @brand.data_point_count(retailer: retailer), 'data point' %>)</li>
+        <li><strong><%= retailer.name %></strong> <%= number_to_currency @brand.average_price(retailer: retailer) %> / oz (<%= pluralize @brand.data_point_count(retailer: retailer), 'data point' %>)</li>
       <% end %>
     </ul>
 

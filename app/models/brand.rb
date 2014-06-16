@@ -14,8 +14,10 @@ class Brand < ActiveRecord::Base
   validates :name, presence: true, uniqueness: { scope: :brewery_id }
 
 
-  def average_price(route: nil, retailer: nil)
-    price_data_for(retailer: retailer, route:route).average(:price_cents).to_f / 100.0
+  def average_price(unit='floz', route: nil, retailer: nil)
+    data = price_data_for(retailer: retailer, route:route)
+    return nil if data.size == 0
+    data.inject(0) { |sum,datum| sum + datum.price_per(unit) } / data.size
   end
 
 
