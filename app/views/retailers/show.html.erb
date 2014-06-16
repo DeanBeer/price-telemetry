@@ -1,1 +1,5 @@
-<%= render 'nav' %>
+<%= title_and_banner @retailer.name %>
+
+<%= render 'nav', retailer: @retailer %>
+
+<strong>Route</strong> <%= @retailer.route_name %>

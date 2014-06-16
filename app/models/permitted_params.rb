@@ -29,7 +29,7 @@ class PermittedParams < Struct.new(:tainted_params)
 
 
   def retailer
-    tainted_params.require(:retailer).permit :name
+    tainted_params.require(:retailer).permit :name , { route: [:name] }
   end
 
 

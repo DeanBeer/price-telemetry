@@ -1,0 +1,32 @@
+<% if @retailer.new_record? %>
+  <%= title_and_banner 'New Retailer' %>
+<% else %>
+  <%= title_and_banner "Edit #{@retailer.name}" %>
+<% end %>
+
+<%= render 'nav' %>
+
+<%= render partial: 'shared/form_errors', object: @retailer.errors %>
+<%= render partial: 'shared/form_errors', object: @route.errors %>
+
+<%= form_for @retailer do |f| %>
+
+  <fieldset> 
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </fieldset>
+
+  <%= fields_for @route do |rf| %>
+
+    <fieldset>
+      <%= rf.label :name, 'Route' %>
+      <%= rf.text_field :name, data: { autocomplete_source: @routes } %>
+    </fieldset>
+
+  <% end %>
+
+  <fieldset>
+    <%= f.submit %>
+  </fieldset>
+
+<% end %>

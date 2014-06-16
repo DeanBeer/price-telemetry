@@ -8,8 +8,8 @@ class Retailer < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
 
-  def route_name=(name)
-    self.route = Route.where(name: name).first
+  def route_name
+    route && route.name
   end
 
 end

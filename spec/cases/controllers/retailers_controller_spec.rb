@@ -4,16 +4,39 @@ require 'shared/success_n_failure'
 
 RSpec.describe RetailersController, type: :controller do
 
-  let(:retailer) { mock_model Retailer }
-  let(:brewery) { mock_model Brewery }
-  let(:retailer_params) { { a: :llama} }
+  shared_context :edit_context do
+    before do
+      allow(Retailer).to receive_message_chain(:includes, :find).and_return(retailer)
+      allow(Route).to receive_message_chain(:select, :distinct, :map).and_return([])
+      allow(retailer).to receive(:route).and_return(route)
+    end
+  end
+
+  shared_examples_for :edit_retailer do
+
+    it 'sets @route' do
+      expect(assigns :route).to be_a(Route)
+    end
+
+    it 'sets @routes' do
+      expect(assigns :routes).to be_a(Array)
+    end
+
+  end
+
+
+  let(:retailer) { mock_model Retailer, route: route }
+  let(:retailer_params) { { name: :llama} }
+  let(:route) { mock_model Route }
+  let(:route_params) { { name: :blark} }
 
 
   describe 'POST create' do
+    include_context :edit_context
 
     before do
       allow(Retailer).to receive(:create).and_return(retailer)
-      post :create, brewery_id: brewery.id, retailer: retailer_params
+      post :create, retailer: retailer_params, route: route_params
     end
 
     context 'success' do
@@ -24,18 +47,20 @@ RSpec.describe RetailersController, type: :controller do
     context 'failure' do
       let(:retailer) { mock_model Retailer, valid?: false }
       it_behaves_like :failed_edit do; let(:ivar) { :retailer }; end
+      it_behaves_like :edit_retailer
     end
 
   end
 
 
   describe 'GET edit' do
+    include_context :edit_context
     before do
-      allow(Retailer).to receive(:find).and_return(retailer)
       get :edit, id: retailer.id
     end
     it_behaves_like :edit do; let(:ivar) { :retailer }; end
     it_behaves_like :http_success
+    it_behaves_like :edit_retailer
   end
 
 
@@ -58,10 +83,12 @@ RSpec.describe RetailersController, type: :controller do
 
   describe 'GET new' do
     before do
-      get :new, brewery_id: brewery.id
+      get :new
     end
+    include_context :edit_context
     it_behaves_like :edit do; let(:ivar) { :retailer }; end
     it_behaves_like :http_success
+    it_behaves_like :edit_retailer
   end
 
 
@@ -70,12 +97,14 @@ RSpec.describe RetailersController, type: :controller do
     before do
       allow(Retailer).to receive(:find).and_return(retailer)
       allow(retailer).to receive(:update_attributes)
-      patch :update, brewery_id: brewery.id, id: retailer.id, retailer: retailer_params
+      patch :update, id: retailer.id, retailer: retailer_params, route: route_params
     end
 
     context 'failure' do
-      let(:retailer) { mock_model Retailer, valid?: false }
+      let(:retailer) { mock_model Retailer, valid?: false, route: route }
+      include_context :edit_context
       it_behaves_like :failed_edit do; let(:ivar) { :retailer }; end
+      it_behaves_like :edit_retailer
     end
 
     context 'success' do
