@@ -1,18 +1,7 @@
 class BeerStylesController < ApplicationController
 
-  def create
-    @beer_style = BeerStyle.create permitted_params.beer_style
-    if @beer_style.valid?
-      flash[:success] = 'Good Job'
-      redirect_to beer_styles_url
-    else
-      index
-    end
-  end
-
-
   def index
-    @beer_styles = BeerStyle.where(group_id: Group.beer_style).select(:label).order(:label).distinct
+    @beer_styles = BeerStyle.all_styles
     render :index
   end
 
