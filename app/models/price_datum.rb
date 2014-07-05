@@ -42,7 +42,7 @@ class PriceDatum < ActiveRecord::Base
   def price_per(unit)
     raise 'No packaging' unless packaging
 logger.info "price per #{unit} = #{price.to_f} / ( #{packaging.volume} >> #{unit} ).scalar"
-    price.to_f / (packaging.volume >> unit).scalar
+    price.to_f / (packaging.total_volume >> unit).scalar
   end
 
 private

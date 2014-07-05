@@ -18,4 +18,9 @@ class Packaging < ActiveRecord::Base
     "#{quantity} x #{volume}"
   end
 
+
+  def total_volume
+    quantity * volume
+  end
+
 end

@@ -1,6 +1,6 @@
 class BeerStyle < GroupMembership
 
-  def all_styles
+  def self.all_styles
     where(group_id: Group.beer_style).select(:label).order(:label).distinct
   end
 
