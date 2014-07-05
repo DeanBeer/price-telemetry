@@ -37,4 +37,9 @@ class PermittedParams < Struct.new(:tainted_params)
     tainted_params.require(:route).permit :name
   end
 
+
+  def beer_style
+    tainted_params.require(:beer_style).permit(:label)
+  end
+
 end

@@ -1,0 +1,9 @@
+<%= title_and_banner @group_membership.label %>
+
+<%= content_for :div, @group_membership do %>
+
+  <p><%= @group_membership.inspect %></p>
+
+  <p><%= @group_membership.group.inspect %></p>
+
+<% end %>

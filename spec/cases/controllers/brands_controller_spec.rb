@@ -1,6 +1,5 @@
 require 'shared/rails_helper'
-require 'shared/behaves_like_edit'
-require 'shared/success_n_failure'
+require 'shared/specific_controller_responses'
 
 RSpec.describe BrandsController, type: :controller do
 
@@ -18,12 +17,17 @@ RSpec.describe BrandsController, type: :controller do
 
     context 'success' do
       let(:brand) { mock_model Brand, valid?: true }
-      it_behaves_like :successful_edit do; let(:url) { brand }; end
+      it_behaves_like :post_create_success do
+        let(:redirect_url) { brand }
+      end
     end
 
     context 'failure' do
       let(:brand) { mock_model Brand, valid?: false }
-      it_behaves_like :failed_edit do; let(:ivar) { :brand }; end
+      it_behaves_like :post_create_failure do
+        let(:ivars) { [ { name: :brand,
+                          value: brand } ] }
+      end
     end
 
   end
@@ -34,24 +38,26 @@ RSpec.describe BrandsController, type: :controller do
       allow(Brand).to receive(:find).and_return(brand)
       get :edit, id: brand.id
     end
-    it_behaves_like :edit do; let(:ivar) { :brand }; end
-    it_behaves_like :http_success
+    it_behaves_like :get_edit do
+      let(:ivars) { [ { name: :brand,
+                        value: brand } ] }
+    end
   end
 
 
   describe 'GET index' do
+    let(:brands) { [brand] }
 
     before do
-      allow(Brand).to receive(:order).and_return([brand])
+      allow(Brand).to receive_message_chain(:joins, :order).and_return(brands)
       get :index
     end
 
-    it 'sets @brands' do
-      expect(assigns :brands).to_not be_nil
+    it_behaves_like :get_index do
+      let(:ivars) { [ { name: :brands,
+                        value: brands
+                  } ] }
     end
-
-    it { expect(subject).to render_template(:index) }
-    it_behaves_like :http_success
 
   end
 
@@ -60,8 +66,10 @@ RSpec.describe BrandsController, type: :controller do
     before do
       get :new, brewery_id: brewery.id
     end
-    it_behaves_like :edit do; let(:ivar) { :brand }; end
-    it_behaves_like :http_success
+
+    it_behaves_like :get_new do
+      let(:ivar) { :brand }
+    end
   end
 
 
@@ -75,12 +83,18 @@ RSpec.describe BrandsController, type: :controller do
 
     context 'failure' do
       let(:brand) { mock_model Brand, valid?: false }
-      it_behaves_like :failed_edit do; let(:ivar) { :brand }; end
+      it_behaves_like :patch_update_failure do
+        let(:ivars) { [ { name: :brand,
+                          value: brand
+                    } ] }
+      end
     end
 
     context 'success' do
       let(:brand) { mock_model Brand, valid?: true }
-      it_behaves_like :successful_edit do; let(:url) { brand }; end
+      it_behaves_like :patch_update_success do
+        let(:redirect_url) { brand }
+      end
     end
 
   end

@@ -3,6 +3,12 @@
 
 <%= content_tag_for :div, @brand do %>
   <p class='by-brewery'>by <span class='brewery'><%= link_to @brand.brewery_name, @brand.brewery %></span></p>
+  <section class='beer-styles'>
+    <h2>Styles</h2>
+    <ul><% @brand.beer_styles.each do |style| %>
+      <li><%= link_to style.label, beer_style_url(style) %></li>
+    <% end %></ul>
+  </section>
   <p><strong>Average Price</strong> <%= number_to_currency @brand.average_price('floz') %> per ounce</p>
   <h4>Average by Route</h4>
     <ul>

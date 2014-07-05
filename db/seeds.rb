@@ -4,8 +4,9 @@ seeds[:brands].each do |brand|
   b = Brand.where name: brand[:name]
   if b.empty?
     brewery = Brewery.find_or_create_by name: brand[:brewery][:name]
-    brewery.brands.create! name: brand[:name]
+    b = brewery.brands.create! name: brand[:name]
     puts "Created #{brand[:name]} -- #{brand[:brewery][:name]}"
+    brand[:beer_styles] && brand[:beer_styles].each { |style| b.add_beer_style style; puts "  #{style}" }
   else
     puts "Found #{brand[:name]} -- #{brand[:brewery][:name]}"
   end

@@ -1,0 +1,12 @@
+<%= title_and_banner 'Beer Styles' %>
+
+<ul>
+  <% @beer_styles.each do |style| %>
+    <li>
+      <%= link_to style.label, beer_style_url(style.label) %>
+      <span class='hidden-control'>
+        <%= link_to 'delete', beer_style_url(style.label), data: { confirm: 'Really?' }, method: :delete, remote: true %>
+      </span>
+    </li>
+  <% end %>
+</ul>

@@ -5,3 +5,4 @@
 //= require turbolinks
 //= require autocomplete
 //= require datepicker
+//= require hidden_control

@@ -4,30 +4,52 @@
     :brewery: &nrb
       :name: New Republic Brewing Co
   - :name: Skylight
+    :beer_styles:
+    - Dunkelweiss
     :brewery: *nrb
   - :name: Windlass
+    :beer_styles:
+    - Porter
     :brewery: *nrb
   - :name: Astrolabe
     :brewery: *nrb
   - :name: Kadigan
+    :beer_styles:
+    - Blonde
     :brewery: *nrb
   - :name: Warimono
+    :beer_styles:
+    - Tripel
     :brewery: *nrb
   - :name: Whipsaw
+    :beer_styles:
+    - Double IPA
     :brewery: *nrb
   - :name: '1836'
+    :beer_styles:
+    - Altbier
     :brewery: &buff
       :name: Buffalo Bayou Brewing Co
   - :name: More Cowbell
+    :beer_styles:
+    - Double IPA
     :brewery: *buff
   - :name: Bombshell Blonde
+    :beer_styles:
+    - Blonde
     :brewery: &so_star
       :name: Southern Star Brewing Co
   - :name: Pine Belt Pale Ale
+    :beer_styles:
+    - Pale Ale
     :brewery: *so_star
   - :name: Valkyrie
+    :beer_styles:
+    - Double IPA
     :brewery: *so_star
   - :name: Tripel B
+    :beer_styles:
+    - Tripel
     :brewery: &adelberts
       :name: Adelbert's
 

@@ -1,6 +1,11 @@
 require 'shared/rails_helper'
+require 'shared/working_in_the_factory'
 
 RSpec.describe Brewery, type: :model do
+
+  it_behaves_like :working_in_the_factory do
+    let(:subject) { FactoryGirl.build :brewery }
+  end
 
   it { should have_many :brands }
 

@@ -1,5 +1,5 @@
 require 'shared/rails_helper'
-require 'shared/http_responses'
+require 'shared/specific_controller_responses'
 
 RSpec.describe PriceDataController, type: :controller do
 
@@ -10,35 +10,6 @@ RSpec.describe PriceDataController, type: :controller do
         allow(c).to receive_message_chain(:select, :distinct, :map)
       end
     end
-  end
-
-
-  shared_examples_for :new_price_datum do
-
-    it 'assigns @brands' do
-      expect(assigns :brands).to be_a(Array)
-    end
-
-    it 'assigns @breweries' do
-      expect(assigns :breweries).to be_a(Array)
-    end
-
-    it 'assigns @packagings' do
-      expect(assigns :packagings).to be_a(Array)
-    end
-
-    it 'assigns @price_datum' do
-      expect(assigns :price_datum).to be_a(PriceDatum)
-    end
-
-    it 'assigns @retailers' do
-      expect(assigns :retailers).to be_an(Array)
-    end
-
-    it { should render_template(:new) }
-
-    it_behaves_like :http_success
-
   end
 
 
@@ -67,7 +38,7 @@ RSpec.describe PriceDataController, type: :controller do
   let(:retailer_params) { { name: retailer_name } }
 
 
-  context 'PUT create' do
+  context 'POST create' do
     before do
       allow(PriceDatum).to receive(:create).and_return(price_datum)
       put :create, params_for_new
@@ -76,27 +47,24 @@ RSpec.describe PriceDataController, type: :controller do
     context 'failure' do
       let(:price_datum) { mock_model PriceDatum, valid?: false }
       include_context :new_price_datum_context
-      it_behaves_like :new_price_datum
-      it_behaves_like :http_success
+      it_behaves_like :post_create_failure do
+        let(:ivars) { [ { name: :price_datum,
+                          value: price_datum
+                    } ] }
+      end
     end
 
     context 'success' do
       let(:price_datum) { mock_model PriceDatum, retailer_name: retailer_name, valid?: true }
-      it_behaves_like :http_redirect do
-        let(:url) { new_price_datum_url(date: price_datum.date, retailer: { name: price_datum.retailer_name }) }
-      end
+       it_behaves_like :post_create_success do
+        let(:redirect_url) { new_price_datum_url(date: price_datum.date, retailer: { name: price_datum.retailer_name }) }
+       end
     end
 
   end
 
 
   context 'DELETE destroy' do
-
-    shared_examples_for :destroying do
-      it_behaves_like :http_redirect do
-        let(:url) { price_data_url }
-      end
-    end
 
     before do
       allow(PriceDatum).to receive(:find).and_return(price_datum)
@@ -105,19 +73,17 @@ RSpec.describe PriceDataController, type: :controller do
 
     context 'failure' do
       let(:price_datum) { mock_model(PriceDatum, destroyed?: false, id: 1) }
-
-      it { expect(flash[:error]).to_not be_blank }
-      it_behaves_like :destroying
-
+      it_behaves_like :delete_destroy_failure do
+        let(:redirect_url) { price_data_url }
+      end
     end
 
 
     context 'success' do
-
-      let(:price_datum) { mock_model(PriceDatum, destroyed?: true, id: 1) }
-
-      it_behaves_like :destroying
-
+      let(:price_datum) { mock_model PriceDatum, destroyed?: true }
+      it_behaves_like :delete_destroy_success do
+        let(:redirect_url) { price_data_url }
+      end
     end
 
   end
@@ -128,15 +94,9 @@ RSpec.describe PriceDataController, type: :controller do
     before do
       get :index
     end
-
-    it_behaves_like :http_success
-
-    it 'sets @price_data' do
-      expect(assigns :price_data).to_not be_nil
+    it_behaves_like :get_index do
+      let(:ivar) { :price_data }
     end
-
-    it { should render_template(:index) }
-
   end
 
 
@@ -147,9 +107,12 @@ RSpec.describe PriceDataController, type: :controller do
     end
 
     include_context :new_price_datum_context
-    it_behaves_like :new_price_datum
 
-    it 'assigns a date' do
+    it_behaves_like :get_new do
+      let(:ivars) { [ :brands, :breweries, :packagings, :retailers, :price_datum ] }
+    end
+
+    it 'assigns a date to price_datum' do
       expect(assigns(:price_datum).date).to_not be_blank
     end
 
@@ -157,7 +120,7 @@ RSpec.describe PriceDataController, type: :controller do
       expect(assigns(:price_datum).date).to eq(date)
     end
 
-    it 'assigns a brewery name' do
+    it 'assigns a brewery name to price_datum' do
       expect(assigns(:price_datum).brewery_name).to_not be_blank
     end
 
@@ -165,7 +128,7 @@ RSpec.describe PriceDataController, type: :controller do
       expect(assigns(:price_datum).brewery_name).to eq(brewery_name)
     end
 
-    it 'assigns a retailer' do
+    it 'assigns a retailer to price_datum' do
       expect(assigns(:price_datum).retailer_name).to_not be_blank
     end
 
@@ -182,15 +145,11 @@ RSpec.describe PriceDataController, type: :controller do
       allow(PriceDatum).to receive(:find).and_return(price_datum)
       get :show, id: price_datum.id
     end
-
-    it 'sets @price_datum' do
-      expect(assigns :price_datum).to_not be_nil
+    it_behaves_like :get_show do
+      let(:ivars) { [ { name: :price_datum,
+                        value: price_datum
+                  } ] }
     end
-
-    it { should render_template(:show) }
-
-    it_behaves_like :http_success
-
   end
 
 

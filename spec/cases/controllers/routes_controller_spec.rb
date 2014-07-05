@@ -1,6 +1,5 @@
 require 'shared/rails_helper'
-require 'shared/behaves_like_edit'
-require 'shared/success_n_failure'
+require 'shared/specific_controller_responses'
 
 RSpec.describe RoutesController, type: :controller do
 
@@ -17,12 +16,14 @@ RSpec.describe RoutesController, type: :controller do
 
     context 'success' do
       let(:route) { mock_model Route, valid?: true }
-      it_behaves_like :successful_edit do; let(:url) { route }; end
+      it_behaves_like :post_create_success do; let(:redirect_url) { route }; end
     end
 
     context 'failure' do
       let(:route) { mock_model Route, valid?: false }
-      it_behaves_like :failed_edit do; let(:ivar) { :route }; end
+      it_behaves_like :post_create_failure do
+        let(:ivars) { [ { name: :route, value: route } ] }
+      end
     end
 
   end
@@ -33,24 +34,23 @@ RSpec.describe RoutesController, type: :controller do
       allow(Route).to receive(:find).and_return(route)
       get :edit, id: route.id
     end
-    it_behaves_like :edit do; let(:ivar) { :route }; end
-    it_behaves_like :http_success
+    it_behaves_like :get_edit do
+      let(:ivars) { [ { name: :route, value: route } ] }
+    end
   end
 
 
   describe 'GET index' do
 
+    let(:routes) { [route] }
+
     before do
-      allow(Route).to receive(:order).and_return([route])
+      allow(Route).to receive_message_chain(:all,:order).and_return(routes)
       get :index
     end
-
-    it 'sets @routes' do
-      expect(assigns :routes).to_not be_nil
+    it_behaves_like :get_index do
+      let(:ivars) { [ { name: :routes, value: routes } ] }
     end
-
-    it { expect(subject).to render_template(:index) }
-    it_behaves_like :http_success
 
   end
 
@@ -59,8 +59,7 @@ RSpec.describe RoutesController, type: :controller do
     before do
       get :new
     end
-    it_behaves_like :edit do; let(:ivar) { :route }; end
-    it_behaves_like :http_success
+    it_behaves_like :get_new do; let(:ivar) { :route }; end
   end
 
 
@@ -74,12 +73,14 @@ RSpec.describe RoutesController, type: :controller do
 
     context 'failure' do
       let(:route) { mock_model Route, valid?: false }
-      it_behaves_like :failed_edit do; let(:ivar) { :route }; end
+      it_behaves_like :patch_update_failure do
+        let(:ivars) { [ { name: :route, value: route } ] }
+      end
     end
 
     context 'success' do
       let(:route) { mock_model Route, valid?: true }
-      it_behaves_like :successful_edit do; let(:url) { route }; end
+      it_behaves_like :patch_update_success do; let(:redirect_url) { route }; end
     end
 
   end

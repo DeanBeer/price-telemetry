@@ -1,6 +1,19 @@
 require 'shared/rails_helper'
+require 'shared/working_in_the_factory'
+
 
 RSpec.describe Brand, type: :model do
+
+  it_behaves_like :working_in_the_factory do
+    let(:subject) { FactoryGirl.build :brand }
+  end
+
+  it 'includes PriceTelemetry::GroupMember' do
+    expect( described_class.include?(PriceTelemetry::GroupMember) )
+  end
+  it 'includes PriceTelemetry::PrettyParam' do
+    expect( described_class.include?(PriceTelemetry::PrettyParam) )
+  end
 
   it { should belong_to :brewery }
 

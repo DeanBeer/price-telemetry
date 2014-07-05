@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140608143212) do
+ActiveRecord::Schema.define(version: 20140620192942) do
 
   create_table "brands", force: true do |t|
     t.string  "name",       limit: 100, null: false
@@ -26,6 +26,19 @@ ActiveRecord::Schema.define(version: 20140608143212) do
   end
 
   add_index "breweries", ["name"], name: "index_breweries_on_name", unique: true
+
+  create_table "group_memberships", force: true do |t|
+    t.integer "member_id",              null: false
+    t.string  "member_type",            null: false
+    t.integer "group_id",               null: false
+    t.string  "label",       limit: 40
+  end
+
+  add_index "group_memberships", ["member_id", "member_type"], name: "index_group_memberships_on_member_id_and_member_type"
+
+  create_table "groups", force: true do |t|
+    t.string "name", limit: 40, null: false
+  end
 
   create_table "packagings", force: true do |t|
     t.string  "material",      limit: 20, null: false

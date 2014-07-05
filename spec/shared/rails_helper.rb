@@ -5,6 +5,10 @@ require 'rspec/rails'
 
 ActiveRecord::Migration.maintain_test_schema!
 
+silence_stream STDOUT do
+  load File.join [ Rails.root, 'db', 'schema.rb' ]
+end
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
 end

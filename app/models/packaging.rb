@@ -4,7 +4,7 @@ class Packaging < ActiveRecord::Base
                        class_name: 'Unit',
                        mapping: [ %w(volume_scalar scalar), %w(volume_units units) ]
 
-  has_many :price_data
+  has_many :price_data, dependent: :destroy
 
   validates :name, uniqueness: { allow_blank: true }
 

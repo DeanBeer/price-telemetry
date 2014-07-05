@@ -2,10 +2,13 @@ source 'https://rubygems.org'
 
 gem 'coffee-rails', '~> 4.0.0'
 gem 'compass-rails'
+gem 'flarg'
+gem 'flamegraph' # For mini-profiler
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'money-rails'
 gem 'nil_returning_coder'
+gem 'rack-mini-profiler'
 gem 'rails', '4.1.1'
 gem 'ruby-units'
 gem 'sass-rails', '~> 4.0.3'
@@ -24,6 +27,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'faker'
   gem 'guard'
   gem 'guard-rspec'
   gem 'rspec-activemodel-mocks'

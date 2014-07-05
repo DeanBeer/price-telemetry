@@ -9,6 +9,7 @@ $(document).on('page:load', init_autocomplete)
 
 init_brand_autocomplete = ->
   input = $("#brand_name")
+  return unless input.length > 0
   brewery_input = $("#brewery_name")
   brand_list = input.data('brands').map( (brand, i) ->
     {
@@ -24,7 +25,8 @@ init_brand_autocomplete = ->
         matcher.test(item.value)
       ))
     select: (event, ui) ->
-      brewery_input.val(ui.item.brewery)
+      if brewery_input
+        brewery_input.val(ui.item.brewery)
 
 $(document).ready(init_brand_autocomplete)
 $(document).on('page:load', init_brand_autocomplete)

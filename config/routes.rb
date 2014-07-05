@@ -8,10 +8,10 @@ Rails.application.routes.draw do
     resources :brands, only: [:create, :new, :update]
   end
 
+  resources :group_memberships, only: [:show]
   resources :price_data
-
   resources :routes
-
   resources :retailers
+  resources :beer_styles
 
 end

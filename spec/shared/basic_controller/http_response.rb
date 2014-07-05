@@ -5,20 +5,13 @@ shared_examples_for :http_response_code do
 end
 
 shared_examples_for :http_failure do
-  let(:code) { 401 }
-  it_behaves_like :http_response_code
+  it_behaves_like :http_response_code do; let(:code) { 401 }; end
 end
 
 shared_examples_for :http_redirect do
-  let(:code) { 302 }
-  it_behaves_like :http_response_code
-  it :redirects do
-    expect(subject).to redirect_to(url)
-  end
-
+  it_behaves_like :http_response_code do; let(:code) { 302 }; end
 end
 
 shared_examples_for :http_success do
-  let(:code) { 200 }
-  it_behaves_like :http_response_code
+  it_behaves_like :http_response_code do; let(:code) { 200 }; end
 end

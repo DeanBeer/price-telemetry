@@ -3,10 +3,13 @@ class PriceDataController < ApplicationController
   def create
     @price_datum = PriceDatum.create params_for_create
     if @price_datum.valid?
+      flash[:success] = 'Good Job'
       redirect_to new_price_datum_url date: @price_datum.date,
                                       retailer: { name: @price_datum.retailer_name }
     else
-      new
+      setup_for_new
+      flash[:error] = 'Boom!'
+      render :edit, status: 401
     end
   end
 
@@ -15,19 +18,15 @@ class PriceDataController < ApplicationController
     price_datum = PriceDatum.find params[:id]
     price_datum.destroy
     unless price_datum.destroyed?
-      flash[:error] = 'Failed to destroy datum'
+      flash[:error] = 'Boom!'
     end
     redirect_to price_data_url
   end
 
 
   def new
-    @brands = Brand.includes(:brewery).map { |brand| { name: brand.name, brewery: brand.brewery_name } }
-    @breweries = Brewery.select(:name).distinct.map(&:name)
-    @packagings = Packaging.select(:name).distinct.map(&:name)
-    @retailers = Retailer.select(:name).distinct.map(&:name)
-    @price_datum ||= PriceDatum.new params_for_new
-    render :new
+    setup_for_new
+    render :edit
   end
 
 
@@ -50,6 +49,12 @@ private
 
   def brewery
     @brewery ||= find_or_create_model(:brewery)
+  end
+
+
+  def find_or_create_model(model)
+    return unless params[model]
+    model.to_s.classify.constantize.find_or_create_by permitted_params.send(model)
   end
 
 
@@ -81,9 +86,12 @@ private
   end
 
 
-  def find_or_create_model(model)
-    return unless params[model]
-    model.to_s.classify.constantize.find_or_create_by permitted_params.send(model)
+  def setup_for_new
+    @brands = Brand.includes(:brewery).map { |brand| { name: brand.name, brewery: brand.brewery_name } }
+    @breweries = Brewery.select(:name).map(&:name)
+    @packagings = Packaging.select(:name).map(&:name)
+    @retailers = Retailer.select(:name).map(&:name)
+    @price_datum ||= PriceDatum.new params_for_new
   end
 
 end

@@ -1,6 +1,5 @@
 require 'shared/rails_helper'
-require 'shared/behaves_like_edit'
-require 'shared/success_n_failure'
+require 'shared/specific_controller_responses'
 
 RSpec.describe RetailersController, type: :controller do
 
@@ -10,18 +9,11 @@ RSpec.describe RetailersController, type: :controller do
       allow(Route).to receive_message_chain(:select, :distinct, :map).and_return([])
       allow(retailer).to receive(:route).and_return(route)
     end
-  end
 
-  shared_examples_for :edit_retailer do
-
-    it 'sets @route' do
-      expect(assigns :route).to be_a(Route)
-    end
-
-    it 'sets @routes' do
-      expect(assigns :routes).to be_a(Array)
-    end
-
+    let(:ivars) { [ { name: :retailer },
+                    { name: :route },
+                    { name: :routes }
+                ] }
   end
 
 
@@ -32,6 +24,7 @@ RSpec.describe RetailersController, type: :controller do
 
 
   describe 'POST create' do
+
     include_context :edit_context
 
     before do
@@ -39,17 +32,24 @@ RSpec.describe RetailersController, type: :controller do
       post :create, retailer: retailer_params, route: route_params
     end
 
+    context 'failure' do
+
+      include_context :edit_context
+
+      let(:retailer) { mock_model Retailer, valid?: false }
+
+      it_behaves_like :post_create_failure do
+        let(:redirect_url) { retailer }
+      end
+    end
+
+
     context 'success' do
       let(:retailer) { mock_model Retailer, valid?: true }
-      it_behaves_like :successful_edit do; let(:url) { retailer }; end
+      it_behaves_like :post_create_success do
+        let(:redirect_url) { retailer }
+      end
     end
-
-    context 'failure' do
-      let(:retailer) { mock_model Retailer, valid?: false }
-      it_behaves_like :failed_edit do; let(:ivar) { :retailer }; end
-      it_behaves_like :edit_retailer
-    end
-
   end
 
 
@@ -58,37 +58,30 @@ RSpec.describe RetailersController, type: :controller do
     before do
       get :edit, id: retailer.id
     end
-    it_behaves_like :edit do; let(:ivar) { :retailer }; end
-    it_behaves_like :http_success
-    it_behaves_like :edit_retailer
+    it_behaves_like :get_edit
   end
 
 
   describe 'GET index' do
-
+    let(:retailers) { [retailer] }
     before do
-      allow(Retailer).to receive(:order).and_return([retailer])
+      allow(Retailer).to receive_message_chain(:all, :order).and_return(retailers)
       get :index
     end
-
-    it 'sets @retailers' do
-      expect(assigns :retailers).to_not be_nil
+    it_behaves_like :get_index do
+      let(:ivars) { [ { name: :retailers, value: retailers } ] }
     end
-
-    it { expect(subject).to render_template(:index) }
-    it_behaves_like :http_success
-
   end
 
 
   describe 'GET new' do
+    include_context :edit_context
+
     before do
       get :new
     end
-    include_context :edit_context
-    it_behaves_like :edit do; let(:ivar) { :retailer }; end
-    it_behaves_like :http_success
-    it_behaves_like :edit_retailer
+
+    it_behaves_like :get_edit
   end
 
 
@@ -101,15 +94,18 @@ RSpec.describe RetailersController, type: :controller do
     end
 
     context 'failure' do
-      let(:retailer) { mock_model Retailer, valid?: false, route: route }
       include_context :edit_context
-      it_behaves_like :failed_edit do; let(:ivar) { :retailer }; end
-      it_behaves_like :edit_retailer
+
+      let(:retailer) { mock_model Retailer, valid?: false, route: route }
+
+      it_behaves_like :patch_update_failure
     end
 
     context 'success' do
       let(:retailer) { mock_model Retailer, valid?: true }
-      it_behaves_like :successful_edit do; let(:url) { retailer }; end
+      it_behaves_like :patch_update_success do
+        let(:redirect_url) { retailer }
+      end
     end
 
   end
